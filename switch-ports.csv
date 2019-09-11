@@ -1,0 +1,37 @@
+Switch,Interface,Server,Link,Comment,VLAN,Trunk_Allowed
+RMKIHX01LN100,Ethernet1/13,btlp000101,nic 0,Linux Production,pvlan secondary,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/14,btlp000101,nic 1,Linux Production,pvlan secondary,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/15,btlp000101,nic 2,Linux Production,pvlan secondary,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/16,btlp000101,nic 3,Linux Production,pvlan secondary,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/17,btlp000102,nic 0,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/18,btlp000102,nic 1,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/19,btlp000102,nic 2,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/20,btlp000102,nic 3,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/21,btlp000103,nic 0,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/22,btlp000103,nic 1,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/23,btlp000103,nic 2,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/24,btlp000103,nic 3,Linux Production,trunk,"""2001,2011,1016-1017"""
+RMKIHX01LN100,Ethernet1/25,btlp000104,nic 0,Linux Production,trunk,"""2400,2403"""
+RMKIHX01LN100,Ethernet1/26,btlp000104,nic 1,Linux Production,trunk,"""2400,2403"""
+RMKIHX01LN100,Ethernet1/27,btlp000104,nic 2,Linux Production,trunk,"""2400,2403"""
+RMKIHX01LN100,Ethernet1/28,btlp000104,nic 3,Linux Production,trunk,"""2400,2403"""
+RMKIHX01LN100,Ethernet1/29,btlp000105,nic 0,Linux Production,trunk,"""2400,2403"""
+RMKIHX01LN100,Ethernet1/30,btlp000105,nic 1,Linux Production,trunk,"""2400,2403"""
+RMKIHX01LN100,Ethernet1/31,btlp000105,nic 2,Linux Production,trunk,"""2400,2403"""
+RMKIHX01LN100,Ethernet1/32,btwp00001,nic 0,Windows Production,809,
+RMKIHX01LN100,Ethernet1/33,btwp00001,nic 1,Windows Production,809,
+RMKIHX01LN100,Ethernet1/34,btwp00002,nic 0,Windows Production,809,
+RMKIHX01LN100,Ethernet1/35,btwp00002,nic 1,Windows Production,809,
+RMKIHX01LN100,Ethernet1/36,btwp00003,nic 0,Windows Production,809,
+RMKIHX01LN100,Ethernet1/37,btwp00003,nic 1,Windows Production,840,
+RMKIHX01LN100,Ethernet1/38,btwp00004,nic 0,Windows Production,840,
+RMKIHX01LN100,Ethernet1/39,btwp00004,nic 1,Windows Production,840,
+RMKIHX01LN100,Ethernet1/40,btvp000101,nic 0,VMWare Production,840,
+RMKIHX01LN100,Ethernet1/41,btvp000101,nic 1,VMWare Production,840,
+RMKIHX01LN100,Ethernet1/42,btvp000102,nic 0,VMWare Production,trunk,"""1000-1001,1004-1005,1008-1009,1012-1013,1016-1017,1200,1202,2000-2001,2004-2005,2008-2011,2013"""
+RMKIHX01LN100,Ethernet1/43,btvp000102,nic 1,VMWare Production,trunk,"""1000-1001,1004-1005,1008-1009,1012-1013,1016-1017,1200,1202,2000-2001,2004-2005,2008-2011,2013"""
+RMKIHX01LN100,Ethernet1/44,btvp000103,nic 0,VMWare Production,trunk,"""1000-1001,1004-1005,1008-1009,1012-1013,1016-1017,1200,1202,2000-2001,2004-2005,2008-2011,2013"""
+RMKIHX01LN100,Ethernet1/45,btvp000103,nic 1,VMWare Production,trunk,"""1000-1001,1004-1005,1008-1009,1012-1013,1016-1017,1200,1202,2000-2001,2004-2005,2008-2011,2013"""
+RMKIHX01LN100,Ethernet1/46,btvp000104,nic 0,VMWare Production,trunk,"""1000-1001,1004-1005,1008-1009,1012-1013,1016-1017,1200,1202,2000-2001,2004-2005,2008-2011,2013"""
+RMKIHX01LN100,Ethernet1/47,btvp000104,nic 1,VMWare Production,trunk,"""1000-1001,1004-1005,1008-1009,1012-1013,1016-1017,1200,1202,2000-2001,2004-2005,2008-2011,2013"""
+RMKIHX01LN100,Ethernet1/48,SPARE, , , ,
