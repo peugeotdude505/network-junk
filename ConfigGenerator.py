@@ -10,11 +10,12 @@ MenuLabel_3 = 'L3 Interfaces'
 MenuLabel_4 = 'Baseline Config for Device'
 MenuLabel_5 = 'BGP configuration'
 
+Subfolder = os.getcwd() + '\\templates\\'
 TemplateFile_1 = 'single-vlan.j2'
 TemplateFile_2 = 'switchport-interface.j2'
 TemplateFile_3 = 'l3-interface.j2'
 TemplateFile_4 = 'device-base.j2'
-
+TemplateFile_5 = 'bgp-neighbor.j2'
 
 def mb1_clicked():
 
@@ -30,7 +31,7 @@ def mb1_clicked():
 		
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(TemplateFile_1)
+		os.startfile(Subfolder + TemplateFile_1)
 
 	#Open a new window for this 	
 	subwindow = Toplevel()
@@ -88,13 +89,14 @@ def mb2_clicked():
 	
 	def selectCSV():
 		subwindow.filename = filedialog.askopenfilename(title = "Select Input File",filetypes = (("Comma Seperated Values","*.csv"),("all files","*.*")))
-		source_file = subwindow.filename
+		sel_csv_file = subwindow.filename
 		text1.delete(0,END)
-		text1.insert(INSERT,source_file)
-		
+		text1.insert(INSERT,sel_csv_file)
+			
 	def renderTemplate():
 	#Calls the Jinja template function
-		GeneratedConfig = SwitchPortTemplate(source_file)
+		myCSV = text1.get()
+		GeneratedConfig = SwitchPortTemplate(myCSV)
 	#Clears the text box	
 		OutputText.delete(1.0,END)
 		OutputText.insert(INSERT,GeneratedConfig)
@@ -104,7 +106,7 @@ def mb2_clicked():
 		
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(TemplateFile_2)
+		os.startfile(Subfolder + TemplateFile_2)
 	
 	#Open a new window for this 
 	subwindow = Toplevel()
@@ -140,17 +142,18 @@ def mb3_clicked():
 
 
 	#Default selection for input file - Comma Seperated Values
-	source_file = "l3-interfaces.csv"
+	source_file	= "l3-interfaces.csv"
 	
 	def selectCSV():
 		subwindow.filename = filedialog.askopenfilename(title = "Select Input File",filetypes = (("Comma Seperated Values","*.csv"),("all files","*.*")))
-		source_file = subwindow.filename
+		sel_csv_file = subwindow.filename
 		text1.delete(0,END)
-		text1.insert(INSERT,source_file)
+		text1.insert(INSERT,sel_csv_file)
 		
 	def renderTemplate():
 	#Calls the Jinja template function
-		GeneratedConfig = L3PortTemplate(source_file)
+		myCSV = text1.get()
+		GeneratedConfig = L3PortTemplate(myCSV)
 	#Clears the text box	
 		OutputText.delete(1.0,END)
 		OutputText.insert(INSERT,GeneratedConfig)
@@ -160,7 +163,7 @@ def mb3_clicked():
 			
 	def openTemplateFile():
 		#Open the Jinja template for viewing/editing
-		os.startfile(TemplateFile_3)
+		os.startfile(Subfolder + TemplateFile_3)
 	
 	
 	#Open a new window for this 
@@ -208,7 +211,7 @@ def mb4_clicked():
 	
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(TemplateFile_4)	
+		os.startfile(Subfolder + TemplateFile_4)	
 	
 	#Open a new window for this 
 	subwindow = Toplevel()
@@ -221,13 +224,13 @@ def mb4_clicked():
 	mgmt_mask_label = Label(subwindow, text="management netmask:")
 	hostname = Entry(subwindow,width=20)
 	mgmt_if = Entry(subwindow,width=12)
-	mgmt_ip = Entry(subwindow,width=20)
-	mgmt_mask = Entry(subwindow,width=12)
+	mgmt_ip = Entry(subwindow,width=18)
+	mgmt_mask = Entry(subwindow,width=18)
 	Generate = Button(subwindow, text="Generate",command=renderTemplate)
 	GoBack = Button(subwindow, text="Back to Main",command=closeWindow)
 	ShowTemplate = Button(subwindow, text="View/Edit J2 template",command=openTemplateFile)
-	ShowTemplate.grid(column=2,row=6)
 	OutputText = scrolledtext.ScrolledText(subwindow,width=80,height=50)	
+	#Layout Elements on the window grid
 	OutputText.grid(columnspan=3,column=0, row=7)
 	sublabel.grid(column=0, row=0)
 	hostname_label.grid(column=0,row=1)
@@ -239,9 +242,45 @@ def mb4_clicked():
 	mgmt_ip.grid(column=1, row=3)
 	mgmt_mask.grid(column=1,row=4)
 	Generate.grid(column=0, row=5)
-	GoBack.grid(column=1, row=5)
+	GoBack.grid(column=3, row=5)
+	ShowTemplate.grid(column=2,row=5)
 	subwindow.mainloop()
-	
+
+def mb5_clicked():
+
+
+	def renderTemplate():
+	#Calls the Jinja template function
+
+	#Clears the text box	
+		OutputText.delete(1.0,END)
+		OutputText.insert(INSERT,GeneratedConfig)
+		
+	def closeWindow():
+		subwindow.withdraw()
+		
+	def openTemplateFile():
+	#Open the Jinja template for viewing/editing
+		os.startfile(Subfolder + TemplateFile_5)
+
+	#Open a new window for this 	
+	subwindow = Toplevel()
+	subwindow.title(MenuLabel_5)
+	#Add items to the new window
+	sublabel = Label(subwindow, text=MenuLabel_5, font=("Arial Bold",10))
+	BGP_label = Label(subwindow, text="Not yet implemented")
+	Generate = Button(subwindow, text="Generate",command=renderTemplate)
+	GoBack = Button(subwindow, text="Back to Main",command=closeWindow)
+	ShowTemplate = Button(subwindow, text="View/Edit J2 template",command=openTemplateFile)
+	OutputText = scrolledtext.ScrolledText(subwindow,width=80,height=10)
+	#layout the elements on a grid pattern
+	OutputText.grid(columnspan=2,column=0, row=7)
+	sublabel.grid(column=0, row=0)
+	BGP_label.grid(column=0,row=1)
+	Generate.grid(column=0,row=3)
+	ShowTemplate.grid(column=1,row=3)
+	GoBack.grid(column=2,row=3)
+	subwindow.mainloop()
 	
 def showHelp_About():
 
@@ -264,8 +303,8 @@ def doQuit():
 	quit()
 
 def VLANTemplate(ID,Desc,IsFP,Type,Assoc):
-	#This line uses the current directory
-	file_loader = FileSystemLoader('.')
+	#This line uses the subdirectory 
+	file_loader = FileSystemLoader(Subfolder)
 	# Load the enviroment
 	env = Environment(loader=file_loader,trim_blocks=True,lstrip_blocks=True)
 	template = env.get_template(TemplateFile_1)
@@ -274,8 +313,8 @@ def VLANTemplate(ID,Desc,IsFP,Type,Assoc):
 	return(output)
 	
 def DeviceTemplate(Hostname,Mgmt_Int,Mgmt_IP,Mgmt_Mask):
-	#This line uses the current directory
-	file_loader = FileSystemLoader('.')
+	#This line uses the subdirectory
+	file_loader = FileSystemLoader(Subfolder)
 	# Load the enviroment
 	env = Environment(loader=file_loader,trim_blocks=True,lstrip_blocks=True)
 	template = env.get_template(TemplateFile_4)
@@ -291,8 +330,8 @@ def SwitchPortTemplate(source_CSV):
 	interface_configs = ""
 
 # Open up the Jinja template file (as text) and then create a Jinja Template Object 
-	with open(TemplateFile_2) as f:
-		interface_template = Template(f.read(), keep_trailing_newline=True)
+	with open(Subfolder + TemplateFile_2) as f:
+		interface_template = Template(f.read(),keep_trailing_newline=True, trim_blocks=True,lstrip_blocks=True)
 
 # Open up the CSV file containing the data 
 	with open(source_CSV) as f:
@@ -326,8 +365,8 @@ def L3PortTemplate(source_CSV):
 	l3_configs = ""
 
 # Open up the Jinja template file (as text) and then create a Jinja Template Object 
-	with open(TemplateFile_3) as f:
-		interface_template = Template(f.read(), keep_trailing_newline=True)
+	with open(Subfolder + TemplateFile_3) as f:
+		interface_template = Template(f.read(), keep_trailing_newline=True,trim_blocks=True,lstrip_blocks=True)
 
 # Open up the CSV file containing the data 
 	with open(source_CSV) as f:
@@ -337,11 +376,14 @@ def L3PortTemplate(source_CSV):
 		for row in reader:
 			l3_config = interface_template.render(
 				interface = row["Interface"],
-				hostname = row["Hostname"],
+				hostname = row["Remote_Hostname"],
 				link = row["Link"],
 				comment = row["Comment"],
 				ipv4 = row["IP Address"],
-				ipv4_mask = row["Netmask"]
+				ipv4_mask = row["Netmask"],
+				ipv6 = row["IPV6 Address"],
+				ipv6_mask = row["IPV6 Netmask"],
+				MTU = row["MTU"]
 			)
 
         # Append this interface configuration to the full configuration 
@@ -367,6 +409,8 @@ MenuButton3 = Button(window, text=MenuLabel_3, command=mb3_clicked)
 MenuButton3.grid(column=1, row=1)
 MenuButton4 = Button(window, text=MenuLabel_4, command=mb4_clicked)
 MenuButton4.grid(column=1, row=2)
+MenuButton5 = Button(window, text=MenuLabel_5, command=mb5_clicked)
+MenuButton5.grid(column=1, row=3)
 
 #Main Menu bar
 menu = Menu(window)
