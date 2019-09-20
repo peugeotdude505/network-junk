@@ -1,0 +1,28 @@
+!
+router bgp {{local-as}}
+ bgp router-id {{router-id}}
+ bgp log-neighbor-changes
+ neighbor {{neighbor-ip}} remote-as {{remote-as}}
+ neighbor {{neighbor-ip}} description {{neighbor-desc}}
+ neighbor {{neighbor-ip}} password 7 {{bgp-pw}}
+ !
+ address-family ipv4
+  redistribute connected route-map RM-CONNECTED-TO-BGP
+  redistribute static route-map RM-STATIC-TO-BGP
+  neighbor {{neighbor-ip}} activate
+  neighbor {{neighbor-ip}} next-hop-self
+  neighbor {{neighbor-ip}} soft-reconfiguration inbound
+  neighbor {{neighbor-ip}} route-map {{route-map-inbound}} in
+  neighbor {{neighbor-ip}} route-map {{route-map-outbound}} out
+ exit-address-family
+ !
+ address-family ipv6
+  redistribute connected route-map RM-CONNECTED-V6-TO-BGP
+  redistribute static route-map RM-STATIC-V6-TO-BGP
+  neighbor {{neighbor-ip}} activate
+  neighbor {{neighbor-ip}} next-hop-self
+  neighbor {{neighbor-ip}} soft-reconfiguration inbound
+  neighbor {{neighbor-ip}} route-map {{route-map-v6-inbound}} in
+  neighbor {{neighbor-ip}} route-map {{route-map-v6-outbound}} out
+ exit-address-family
+!
