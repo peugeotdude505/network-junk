@@ -1,0 +1,41 @@
+!
+! Just a simple Cisco IOS configuration
+!
+hostname {{ hostname }}
+!
+ip domain-name {{ domain_name }}
+!
+interface {{interface}}
+ description Management Interface
+ ip address {{ ip }} {{mask}}
+!
+
+
+banner motd #
+
+This is a private system.
+
+Any unauthorized access or use is prohibited and
+may result in criminal or civil prosecution.
+All activity is subject to monitoring.
+
+This system is to be used for authorized business/work
+related purposes only.  Any abuse of access privileges
+will result in disciplinary action up to and including
+termination of employment and/or prosecution.
+
+
+Ceci est un systeme prive.
+
+Tout acces ou usage non autorise est interdit.  Un usage
+non autorise peut faire l'objet de sanctions civiles et
+penales toutes activites peuvent etre soumises a la surveillance.
+
+Ce systeme est destine a etre utilise pour des activites
+autorisees d'ordre professionel uniquement.  Tout abus
+des privileges entrainera des mesures disciplinaires allant
+jusqu'au licenciement et/ou a des poursuites judiciaires.
+
+#
+
+!

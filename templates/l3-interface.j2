@@ -1,0 +1,20 @@
+! 
+interface {{ interface }}
+ description [ {{ hostname }} port {{ link }} {{ comment }} ]
+ no  switchport
+ ip address {{ipv4}} {{ipv4_mask}}
+ {% if MTU != "1500" %}
+ mtu {{MTU}} 
+ ipv4 mtu {{MTU}}
+ ipv6 mtu {{MTU}}
+ {%endif%}
+ {% if ipv6 != "NA" %}
+ ipv6 address {{ipv6}}{{ipv6_mask}}
+ {%endif%}
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ ip pim sparse-mode
+ no shutdown
+
+   
