@@ -334,7 +334,7 @@ def mb6_clicked():
 	def renderTemplate():
 		TemplateFile_6 = text1.get()
 		#Calls the Jinja template function
-		GeneratedConfig = GenericTemplate(value1.get(),value2.get(),value3.get(),value4.get())
+		GeneratedConfig = GenericTemplate(value1.get(),value2.get(),value3.get(),value4.get(),value5.get())
 		#Clears the text box	
 		OutputText.delete(1.0,END)
 		OutputText.insert(INSERT,GeneratedConfig)
@@ -357,10 +357,12 @@ def mb6_clicked():
 	value2_label = Label(subwindow, text="Variable2:")
 	value3_label = Label(subwindow, text="Variable3:")
 	value4_label = Label(subwindow, text="Variable4:")
+	value5_label = Label(subwindow, text="Variable5:")
 	value1 = Entry(subwindow,width=20)
 	value2 = Entry(subwindow,width=20)
 	value3 = Entry(subwindow,width=20)
 	value4 = Entry(subwindow,width=20)
+	value5 = Entry(subwindow,width=20)
 	text1 = Entry(subwindow,width=20)
 	text1.insert(INSERT,TemplateFile_6)
 	SelectFile = Button(subwindow, text="Select Input File",command=selectTFile)
@@ -369,7 +371,7 @@ def mb6_clicked():
 	ShowTemplate = Button(subwindow, text="View/Edit J2 template",command=openTemplateFile)
 	OutputText = scrolledtext.ScrolledText(subwindow,width=80,height=50)	
 	#Layout Elements on the window grid
-	OutputText.grid(columnspan=3,column=0, row=7)
+	OutputText.grid(columnspan=3,column=0, row=8)
 	sublabel.grid(column=0, row=0)
 	text1_label.grid(column=0,row=1)
 	text1.grid(column=1,row=1)
@@ -377,14 +379,16 @@ def mb6_clicked():
 	value2_label.grid(column=0,row=3)
 	value3_label.grid(column=0,row=4)
 	value4_label.grid(column=0,row=5)
+	value5_label.grid(column=0,row=6)
 	value1.grid(column=1,row=2)
 	value2.grid(column=1,row=3)
 	value3.grid(column=1,row=4)
 	value4.grid(column=1,row=5)
-	SelectFile.grid(column=1,row=6)
-	Generate.grid(column=0, row=6)
-	GoBack.grid(column=3, row=6)
-	ShowTemplate.grid(column=2,row=6)
+	value5.grid(column=1,row=6)
+	SelectFile.grid(column=1,row=7)
+	Generate.grid(column=0, row=7)
+	ShowTemplate.grid(column=2,row=7)
+	GoBack.grid(column=3, row=7)
 	subwindow.mainloop()
 	
 	
@@ -399,7 +403,7 @@ def mb7_clicked():
 		text1.insert(INSERT,sel_csv_file)
 	
 	def selectTFile():
-		subwindow.filename = filedialog.askopenfilename(title = "Select Input File",filetypes = (("Jinja2 Template","*.j2"),("all files","*.*")))
+		subwindow.filename = filedialog.askopenfilename(title = "Select Template File ",filetypes = (("Jinja2 Template","*.j2"),("all files","*.*")))
 		sel_template_file = subwindow.filename
 		text1.delete(0,END)
 		text1.insert(INSERT,sel_template_file)
@@ -445,8 +449,8 @@ def mb7_clicked():
 	text1.grid(column=1, row=1)
 	text2_label.grid(column=0,row=2)
 	text2.grid(column=1,row=2)
-	SelectFile.grid(column=0,row=6)
-	SelectTemplate.grid(column=1,row=6)
+	SelectFile.grid(column=2,row=1)
+	SelectTemplate.grid(column=2,row=2)
 	Generate.grid(column=2,row=6)
 	ShowTemplate.grid(column=3,row=6)
 	GoBack.grid(column=4,row=6)
