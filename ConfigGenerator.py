@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import scrolledtext,filedialog
+from tkinter import scrolledtext,filedialog,messagebox
 from jinja2 import Environment, FileSystemLoader, Template
 import csv
 import os
@@ -11,7 +11,7 @@ MenuLabel_4 = 'Baseline Config for Device'
 MenuLabel_5 = 'BGP Neighbor'
 MenuLabel_6 = 'Generic Single Element'
 MenuLabel_7 = 'Generic Multiple Items from CSV'
-MenuLabel_8 = 'S2S VPN'
+MenuLabel_8 = 'S2S VPN Peer'
 
 Subfolder = os.getcwd() + '\\templates\\'
 TemplateFile_1 = 'single-vlan.j2'
@@ -24,7 +24,7 @@ TemplateFile_7 = 'csv-generic.j2'
 TemplateFile_8 = 'vpn.j2'
 
 def mb1_clicked():
-
+	# Starting simple with a single vlan template
 	def renderTemplate():
 	#Calls the Jinja template function
 		GeneratedConfig = VLANTemplate(vlanID.get(),vlanDesc.get(),mode.get(),type.get(),vlanAssoc.get())
@@ -37,7 +37,10 @@ def mb1_clicked():
 		
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(Subfolder + TemplateFile_1)
+		try:
+			os.startfile(Subfolder + TemplateFile_1)		
+		except IOError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_1))
 
 	#Open a new window for this 	
 	subwindow = Toplevel()
@@ -89,7 +92,7 @@ def mb1_clicked():
 	subwindow.mainloop()
 	
 def mb2_clicked():
-
+	#Combine a CSV file with template for Switch Ports interfaces. 
 	#Default selection for input file - Comma Seperated Values
 	source_file = "switch-ports.csv"
 	
@@ -112,7 +115,10 @@ def mb2_clicked():
 		
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(Subfolder + TemplateFile_2)
+		try:
+			os.startfile(Subfolder + TemplateFile_2)		
+		except IOError or FileNotFoundError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_2))
 	
 	#Open a new window for this 
 	subwindow = Toplevel()
@@ -145,7 +151,7 @@ def mb2_clicked():
 	subwindow.mainloop()
 	
 def mb3_clicked():
-
+	#Combine a CSV file with template for Layer3 interfaces
 
 	#Default selection for input file - Comma Seperated Values
 	source_file	= "l3-interfaces.csv"
@@ -169,7 +175,10 @@ def mb3_clicked():
 			
 	def openTemplateFile():
 		#Open the Jinja template for viewing/editing
-		os.startfile(Subfolder + TemplateFile_3)
+		try:
+			os.startfile(Subfolder + TemplateFile_3)		
+		except IOError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_3))
 	
 	
 	#Open a new window for this 
@@ -203,7 +212,7 @@ def mb3_clicked():
 	subwindow.mainloop()
 	
 def mb4_clicked():
-
+	#Generic Config Template for a device. Add more fields!!
 	
 	def renderTemplate():
 		#Calls the Jinja template function
@@ -217,7 +226,10 @@ def mb4_clicked():
 	
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(Subfolder + TemplateFile_4)	
+		try:
+			os.startfile(Subfolder + TemplateFile_4)		
+		except IOError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_4))
 	
 	#Open a new window for this 
 	subwindow = Toplevel()
@@ -253,7 +265,7 @@ def mb4_clicked():
 	subwindow.mainloop()
 
 def mb5_clicked():
-
+	#BGP Peer template
 
 	def renderTemplate():
 	#Calls the Jinja template function
@@ -267,7 +279,10 @@ def mb5_clicked():
 		
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(Subfolder + TemplateFile_5)
+		try:
+			os.startfile(Subfolder + TemplateFile_5)		
+		except IOError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_5))
 
 	#Open a new window for this 	
 	subwindow = Toplevel()
@@ -345,7 +360,10 @@ def mb6_clicked():
 	def openTemplateFile():
 		TemplateFile_6 = text1.get()
 	#Open the Jinja template for viewing/editing
-		os.startfile(Subfolder + TemplateFile_6)	
+		try:
+			os.startfile(Subfolder + TemplateFile_6)		
+		except IOError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_6))	
 	
 	#Open a new window for this 
 	subwindow = Toplevel()
@@ -422,7 +440,10 @@ def mb7_clicked():
 		
 	def openTemplateFile():
 	#Open the Jinja template for viewing/editing
-		os.startfile(Subfolder + TemplateFile_7)
+		try:
+			os.startfile(Subfolder + TemplateFile_7)		
+		except IOError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_7))
 		
 	
 	#Open a new window for this 
@@ -458,7 +479,77 @@ def mb7_clicked():
 	
 	
 def mb8_clicked():
-	print ("Not yet implemented.")
+	##VPN peer template
+	
+	def renderTemplate():
+	#Calls the Jinja template function
+		GeneratedConfig = VPNTemplate(ClientName.get(),PeerIP.get(),PolicyNum.get(),PreSharedKey.get(),Comment.get(),edomain1.get(),edomain2.get())
+	#Clears the text box	
+		OutputText.delete(1.0,END)
+		OutputText.insert(INSERT,GeneratedConfig)
+		
+	def closeWindow():
+		subwindow.withdraw()
+		
+	def openTemplateFile():
+		#Open the Jinja template for viewing/editing
+		try:
+			os.startfile(Subfolder + TemplateFile_8)		
+		except IOError:
+			messagebox.showinfo('Template File Error',('File Not found: ',Subfolder + TemplateFile_8))
+
+	#Open a new window for this 	
+	subwindow = Toplevel()
+	subwindow.title(MenuLabel_8)
+	#Add items to the new window
+	sublabel = Label(subwindow, text=MenuLabel_8, font=("Arial Bold",10))
+	#Label for each input text box
+	ClientName_label = Label(subwindow, text=" VPN Name/Description:")
+	PeerIP_label = Label(subwindow, text="Peer IP:")
+	PolicyNum_label = Label(subwindow, text="Crypto Map Sequence# - Must be unique!")
+	PreSharedKey_label = Label(subwindow, text="Pre Shared Key:")
+	Comment_label = Label(subwindow, text="Comment: ")
+	edomain1_label = Label(subwindow, text="Encyrption Domain source host or network/wildcard:")
+	edomain2_label = Label(subwindow, text="Encryption Domain dest host or network/wildcard:")
+	#Text boxes
+	ClientName = Entry(subwindow,width=20)
+	PeerIP = Entry(subwindow,width=12)
+	PolicyNum = Entry(subwindow,width=8)
+	PreSharedKey = Entry(subwindow,width=20)
+	Comment = Entry(subwindow,width=12)
+	edomain1  = Entry(subwindow,width=24)
+	edomain2  = Entry(subwindow,width=24)
+	#Buttons
+	Generate = Button(subwindow, text="Generate",command=renderTemplate)
+	GoBack = Button(subwindow, text="Back to Main",command=closeWindow)
+	ShowTemplate = Button(subwindow, text="View/Edit J2 template",command=openTemplateFile)
+	OutputText = scrolledtext.ScrolledText(subwindow,width=80,height=30)
+	#layout the elements on a grid pattern
+	OutputText.grid(columnspan=2,column=0, row=7)
+	sublabel.grid(column=0, row=0)
+	ClientName_label.grid(column=0,row=1)
+	PeerIP_label.grid(column=0,row=2)
+	PolicyNum_label.grid(column=0,row=3)
+	Comment_label.grid(column=0,row=4)
+
+	ClientName.grid(column=1,row=1)
+	PeerIP.grid(column=1,row=2)
+	PolicyNum.grid(column=1,row=3)
+	Comment.grid(column=1,row=4)
+
+	PreSharedKey_label.grid(column=2, row=1)
+	edomain1_label.grid(column=2,row=2)
+	edomain2_label.grid(column=2,row=3)
+
+	PreSharedKey.grid(column=3, row=1)
+	edomain1.grid(column=3,row=2)
+	edomain2.grid(column=3,row=3)
+	Generate.grid(column=0,row=5)
+	ShowTemplate.grid(column=1,row=5)
+	GoBack.grid(column=2,row=5)
+	OutputText.grid(columnspan=3,column=0, row=6)
+	subwindow.mainloop()
+	
 		
 def showHelp_About():
 
@@ -485,7 +576,10 @@ def VLANTemplate(ID,Desc,IsFP,Type,Assoc):
 	file_loader = FileSystemLoader(Subfolder)
 	# Load the enviroment
 	env = Environment(loader=file_loader,trim_blocks=True,lstrip_blocks=True)
-	template = env.get_template(TemplateFile_1)
+	try:
+		template = env.get_template(TemplateFile_1)
+	except IOError:
+		messagebox.showinfo('Template File Error',('File Not found: ',TemplateFile_1))
 	output = template.render(vlan=ID,name=Desc,fpmode=IsFP,vlanType=Type,vlan_assoc=Assoc)
 #	print(output)
 	return(output)
@@ -495,7 +589,10 @@ def DeviceTemplate(Hostname,Mgmt_Int,Mgmt_IP,Mgmt_Mask):
 	file_loader = FileSystemLoader(Subfolder)
 	# Load the enviroment
 	env = Environment(loader=file_loader,trim_blocks=True,lstrip_blocks=True)
-	template = env.get_template(TemplateFile_4)
+	try:
+		template = env.get_template(TemplateFile_4)
+	except IOError:
+		messagebox.showinfo('Template File Error',('File Not found: ',TemplateFile_4))
 	output = template.render(hostname=Hostname,interface=Mgmt_Int,ip=Mgmt_IP,mask=Mgmt_Mask)
 #	print(output)
 	return(output)
@@ -505,8 +602,26 @@ def BGPTemplate(localAS,RouterID,Neighbor_IP,Neighbor_AS,Neighbor_Desc,password,
 	file_loader = FileSystemLoader(Subfolder)
 	# Load the enviroment
 	env = Environment(loader=file_loader,trim_blocks=True,lstrip_blocks=True)
-	template = env.get_template(TemplateFile_5)
+	try:
+		template = env.get_template(TemplateFile_5)
+	except IOError:
+		messagebox.showinfo('Template File Error',('File Not found: ',TemplateFile_5))
+	
 	output = template.render(localas=localAS,router_id=RouterID,neighbor_ip=Neighbor_IP,neighbor_desc=Neighbor_Desc,remote_as=Neighbor_AS,bgp_pw=password,rm_inbound=RM_IN,rm_outbound=RM_OUT)
+#	print(output)
+	return(output)
+
+def VPNTemplate(ClientName,PeerIP,PolicyNum,PreSharedKey,Comment,e_src,e_dest):
+	#This line uses the subdirectory
+	file_loader = FileSystemLoader(Subfolder)
+	# Load the enviroment
+	env = Environment(loader=file_loader,trim_blocks=True,lstrip_blocks=True)
+	try:
+		template = env.get_template(TemplateFile_8)
+	except IOError:
+		messagebox.showinfo('Template File Error',('File Not found: ',TemplateFile_8))
+			
+	output = template.render(client_name=ClientName,peer_ip=PeerIP,pol_number=PolicyNum,thepresharedkey=PreSharedKey,a_comment=Comment,encryption_domain_src=e_src,encryption_domain_dest=e_dest)
 #	print(output)
 	return(output)
 	
@@ -515,7 +630,11 @@ def GenericTemplate(value1,value2,value3,value4,value5):
 	file_loader = FileSystemLoader(Subfolder)
 	# Load the enviroment
 	env = Environment(loader=file_loader,trim_blocks=True,lstrip_blocks=True)
-	template = env.get_template(TemplateFile_6)
+	try:
+		template = env.get_template(TemplateFile_6)
+	except IOError:
+		messagebox.showinfo('Template File Error',('File Not found: ',TemplateFile_6))
+		
 	output = template.render(variable1=value1,variable2=value2,variable3=value3,variable4=value4,variable5=value5)
 #	print(output)
 	return(output)
@@ -530,9 +649,12 @@ def SwitchPortTemplate(source_CSV):
 	interface_configs = ""
 
 # Open up the Jinja template file (as text) and then create a Jinja Template Object 
-	with open(Subfolder + TemplateFile_2) as f:
-		interface_template = Template(f.read(),keep_trailing_newline=True, trim_blocks=True,lstrip_blocks=True)
-
+	try:
+		with open(Subfolder + TemplateFile_2) as f:
+			interface_template = Template(f.read(),keep_trailing_newline=True, trim_blocks=True,lstrip_blocks=True)
+	except IOError:
+		messagebox.showinfo('Template File Error',('File Not found: ',TemplateFile_2))	
+						
 # Open up the CSV file containing the data 
 	with open(source_CSV) as f:
 		# Use DictReader to access data from CSV 
@@ -565,9 +687,12 @@ def L3PortTemplate(source_CSV):
 	l3_configs = ""
 
 # Open up the Jinja template file (as text) and then create a Jinja Template Object 
-	with open(Subfolder + TemplateFile_3) as f:
-		interface_template = Template(f.read(), keep_trailing_newline=True,trim_blocks=True,lstrip_blocks=True)
-
+	try:	
+		with open(Subfolder + TemplateFile_3) as f:
+			interface_template = Template(f.read(), keep_trailing_newline=True,trim_blocks=True,lstrip_blocks=True)
+	except IOError:
+		messagebox.showinfo('Template File Error',('File Not found: ',TemplateFile_3))	
+				
 # Open up the CSV file containing the data 
 	with open(source_CSV) as f:
 		# Use DictReader to access data from CSV 

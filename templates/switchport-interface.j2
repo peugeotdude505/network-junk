@@ -1,28 +1,34 @@
 ! 
 interface {{ interface }}
-  description [ {{ server }} port {{ link }} {{ comment }} ]
+  description [{{ server }} port {{ link }} {{ comment }} ]
   switchport
-  {% if vlan == "trunk" -%}
+  {% if vlan == "trunk" %}
   switchport mode trunk
+  switchport trunk native vlan 999
   switchport trunk allowed vlan {{allowed}}
   spanning-tree port type edge trunk
-  {% elif vlan == "pvlan secondary" -%}
+  {% elif vlan == "pvlan secondary" %}
   switchport mode private-vlan trunk secondary
+  switchport mode private-vlan trunk native vlan 999
   switchport private-vlan trunk allowed vlan {{allowed}}
   !need to add pvlan assocations manually for now - sorry 
-   switchport private-vlan association trunk x y
+  switchport private-vlan association trunk x y
   spanning-tree port type edge trunk
-  {% elif vlan == "pvlan primary" -%}
+  {% elif vlan == "pvlan primary" %}
   switchport mode private-vlan trunk promiscious
+  switchport mode private-vlan trunk native vlan 999
   switchport private-vlan trunk allowed vlan {{allowed}}
   !need to add pvlan mappings manually for now - sorry 
   switchport private-vlan mapping trunk x y
   spanning-tree port type edge trunk
-  {% else -%}
+  {% else %}
   switchport mode access
   switchport access vlan {{ vlan }}
   spanning-tree port type edge
-  {% endif -%}
+  {% endif %}
+  !optional
+  !storm-control broadcast level 5.00
+  !storm-control unicast level 10.00
   spanning-tree bpduguard enable
   no snmp trap link-status
   no shutdown

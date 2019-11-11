@@ -1,0 +1,20 @@
+! 
+interface {{ variable1 }}
+ description [ {{ variable2 }} port {{ variable3 }} {{ comment }} ]
+ no  switchport
+ ip address {{variable4}} {{variable5}}
+ {% if variable6 != "1500" %}
+ mtu {{variable6}} 
+ ipv4 mtu {{variable6}}
+ ipv6 mtu {{variable6}}
+ {%endif%}
+ {% if ipv6 != "NA" %}
+ ipv6 address {{ipv6}}{{ipv6_mask}}
+ {%endif%}
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ ip pim sparse-mode
+ no shutdown
+
+   

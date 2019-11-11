@@ -1,23 +1,23 @@
-! 
-	
-crypto isakmp policy {{ pol_number}}
- encr aes 256 	
- authentication pre-share	
- group 5
-
- 	
-crypto isakmp key {{presharedkey}} address {{peer_ip}}
-
+! Skip the isakmp policy if already configured.
+! This section is just an example
+!crypto isakmp policy #
+! encr aes 256 	
+! authentication pre-share	
+! group 5
+!
+crypto isakmp key {{thepresharedkey}} address {{peer_ip}}
+!
 crypto ipsec transform-set TS-{{client_name}} esp-aes 256 esp-sha-hmac 
 mode tunnel
-
+!
 crypto map VPNPEERS {{pol_number}} ipsec-isakmp
-description {{client_name}}: {{comment}
+description {{client_name}}-{{a_comment}}
 set peer {{peer_ip}}
 set transform-set TS-{{client_name}}
 match address VPN-{{client_name}}
-
+!
 ip access-list extended VPN-{{client_name}}
 remark ****{{client_name}} Encryption Domain ****
-permit ip {{encrption_domain_1}}
-permit ip {{encrption_domain_2}}
+permit ip {{encryption_domain_src}} {{encryption_domain_dest}}
+!Add additional lines here if required
+!
